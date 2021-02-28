@@ -1,5 +1,5 @@
 build:
-	$(MAKE) prepare-test
+	$(MAKE) prepare-dev
 	$(MAKE) analyze
 	$(MAKE) tests
 
