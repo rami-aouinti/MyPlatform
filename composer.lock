@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cf5aea625fcd1e82e4c1447af089dc0b",
+    "content-hash": "5a1b0d9498c736b4bfba562decbaa281",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -7970,6 +7970,251 @@
             "time": "2020-11-14T09:36:49+00:00"
         },
         {
+            "name": "escapestudios/symfony2-coding-standard",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/djoos/Symfony-coding-standard.git",
+                "reference": "1524e573f5061555af3c363f0948c444d8522499"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/djoos/Symfony-coding-standard/zipball/1524e573f5061555af3c363f0948c444d8522499",
+                "reference": "1524e573f5061555af3c363f0948c444d8522499",
+                "shasum": ""
+            },
+            "require": {
+                "squizlabs/php_codesniffer": "^3.3.1"
+            },
+            "conflict": {
+                "squizlabs/php_codesniffer": "<3 || >=4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.0 || ^6.0 || ^7.0"
+            },
+            "default-branch": true,
+            "type": "phpcodesniffer-standard",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "David Joos",
+                    "email": "iam@davidjoos.com"
+                },
+                {
+                    "name": "Community contributors",
+                    "homepage": "https://github.com/djoos/Symfony-coding-standard/graphs/contributors"
+                }
+            ],
+            "description": "CodeSniffer ruleset for the Symfony 2+ coding standard",
+            "homepage": "https://github.com/djoos/Symfony-coding-standard",
+            "keywords": [
+                "Coding Standard",
+                "Symfony2",
+                "phpcs",
+                "symfony"
+            ],
+            "support": {
+                "issues": "https://github.com/djoos/Symfony-coding-standard/issues",
+                "source": "https://github.com/djoos/Symfony-coding-standard"
+            },
+            "time": "2021-01-18T12:40:14+00:00"
+        },
+        {
+            "name": "fzaninotto/faker",
+            "version": "v1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fzaninotto/Faker.git",
+                "reference": "d0190b156bcca848d401fb80f31f504f37141c8d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/d0190b156bcca848d401fb80f31f504f37141c8d",
+                "reference": "d0190b156bcca848d401fb80f31f504f37141c8d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "~1.5"
+            },
+            "suggest": {
+                "ext-intl": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.5.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Faker\\": "src/Faker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "François Zaninotto"
+                }
+            ],
+            "description": "Faker is a PHP library that generates fake data for you.",
+            "keywords": [
+                "data",
+                "faker",
+                "fixtures"
+            ],
+            "support": {
+                "issues": "https://github.com/fzaninotto/Faker/issues",
+                "source": "https://github.com/fzaninotto/Faker/tree/master"
+            },
+            "abandoned": true,
+            "time": "2015-05-29T06:29:14+00:00"
+        },
+        {
+            "name": "phpstan/phpstan",
+            "version": "0.12.80",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan.git",
+                "reference": "c6a1b17f22ecf708d434d6bee05092647ec7e686"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/c6a1b17f22ecf708d434d6bee05092647ec7e686",
+                "reference": "c6a1b17f22ecf708d434d6bee05092647ec7e686",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1|^8.0"
+            },
+            "conflict": {
+                "phpstan/phpstan-shim": "*"
+            },
+            "bin": [
+                "phpstan",
+                "phpstan.phar"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.12-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPStan - PHP Static Analysis Tool",
+            "support": {
+                "issues": "https://github.com/phpstan/phpstan/issues",
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.80"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/ondrejmirtes",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/phpstan",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpstan/phpstan",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-02-28T20:22:43+00:00"
+        },
+        {
+            "name": "phpstan/phpstan-symfony",
+            "version": "0.12.20",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan-symfony.git",
+                "reference": "ab56a2efc564243c0962432e1d12012655e79ea7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/ab56a2efc564243c0962432e1d12012655e79ea7",
+                "reference": "ab56a2efc564243c0962432e1d12012655e79ea7",
+                "shasum": ""
+            },
+            "require": {
+                "ext-simplexml": "*",
+                "php": "^7.1 || ^8.0",
+                "phpstan/phpstan": "^0.12.51"
+            },
+            "conflict": {
+                "symfony/framework-bundle": "<3.0"
+            },
+            "require-dev": {
+                "phing/phing": "^2.16.3",
+                "php-parallel-lint/php-parallel-lint": "^1.2",
+                "phpstan/phpstan-phpunit": "^0.12.16",
+                "phpstan/phpstan-strict-rules": "^0.12.5",
+                "phpunit/phpunit": "^7.5.20",
+                "symfony/config": "^4.2",
+                "symfony/console": "^4.0",
+                "symfony/framework-bundle": "^4.0",
+                "symfony/http-foundation": "^4.0",
+                "symfony/messenger": "^4.2",
+                "symfony/serializer": "^4.0"
+            },
+            "type": "phpstan-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.12-dev"
+                },
+                "phpstan": {
+                    "includes": [
+                        "extension.neon",
+                        "rules.neon"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PHPStan\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lukáš Unger",
+                    "email": "looky.msc@gmail.com",
+                    "homepage": "https://lookyman.net"
+                }
+            ],
+            "description": "Symfony Framework extensions and rules for PHPStan",
+            "support": {
+                "issues": "https://github.com/phpstan/phpstan-symfony/issues",
+                "source": "https://github.com/phpstan/phpstan-symfony/tree/0.12.20"
+            },
+            "time": "2021-02-19T11:55:30+00:00"
+        },
+        {
             "name": "symfony/browser-kit",
             "version": "v5.2.3",
             "source": {
@@ -8421,7 +8666,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "escapestudios/symfony2-coding-standard": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

@@ -96,8 +96,14 @@
     "egulias/email-validator": {
         "version": "2.1.25"
     },
+    "escapestudios/symfony2-coding-standard": {
+        "version": "3.x-dev"
+    },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.3"
+    },
+    "fzaninotto/faker": {
+        "version": "v1.5.0"
     },
     "laminas/laminas-code": {
         "version": "4.0.0"
@@ -122,6 +128,12 @@
     },
     "phpdocumentor/type-resolver": {
         "version": "1.4.0"
+    },
+    "phpstan/phpstan": {
+        "version": "0.12.80"
+    },
+    "phpstan/phpstan-symfony": {
+        "version": "0.12.20"
     },
     "psr/cache": {
         "version": "1.0.1"

@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\PostType;
-use App\Form\RegistrationType;
 use App\Form\UserType;
 use App\Security\WebAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

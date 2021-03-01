@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Entity\Post;
@@ -73,7 +75,7 @@ class PostController extends AbstractController
     #[Route('/{id}', name: 'post_delete', methods: ['DELETE'])]
     public function delete(Request $request, Post $post): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $post->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($post);
             $entityManager->flush();

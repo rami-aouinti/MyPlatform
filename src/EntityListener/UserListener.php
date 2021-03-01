@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\EntityListener;
 
-
 use App\Entity\User;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -23,7 +22,7 @@ class UserListener
     }
 
 
-    public function prePersist(User  $user): void
+    public function prePersist(User $user): void
     {
         $user->setPassword(
             $this->userPasswordEncode->encodePassword(
@@ -32,5 +31,4 @@ class UserListener
             )
         );
     }
-
 }

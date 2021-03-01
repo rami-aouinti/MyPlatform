@@ -1,36 +1,50 @@
-build:
-	$(MAKE) prepare-dev
-	$(MAKE) analyze
-	$(MAKE) tests
+unit-tests:
+	php bin/phpunit --testsuite unit
 
-.PHONY: translations
-translations:
-	php bin/console translation:update --force en
+functional-tests:
+	php bin/phpunit --testsuite functional
+
+.PHONY: vendor
+analyze:
+	npm audit
+	composer valid
+	php bin/console doctrine:schema:valid --skip-sync
+	vendor/bin/phpcs
 
 .PHONY: tests
 tests:
 	php bin/phpunit
 
-analyze:
-	npm audit
-	composer valid
-	php bin/console doctrine:schema:valid --skip-sync --env=test
+fixtures-test:
+	php bin/console doctrine:fixtures:load -n --env=test
 
-prepare-dev:
-	npm install
-	npm run dev
-	composer install --prefer-dist
-	php bin/console doctrine:database:drop --if-exists -f --env=dev
-	php bin/console doctrine:database:create --env=dev
-	php bin/console doctrine:schema:update -f --env=dev
+fixtures-dev:
 	php bin/console doctrine:fixtures:load -n --env=dev
 
-prepare-test:
-	npm install
-	npm run dev
-	composer install --prefer-dist
-	php bin/console cache:clear --env=test
-	php bin/console doctrine:database:drop --if-exists -f --env=test
+database-test:
+	php bin/console doctrine:database:drop --if-exists --force --env=test
 	php bin/console doctrine:database:create --env=test
-	php bin/console doctrine:schema:update -f --env=test
-	php bin/console doctrine:fixtures:load -n --env=test
+	php bin/console doctrine:schema:update --force --env=test
+
+database-dev:
+	php bin/console doctrine:database:drop --if-exists --force --env=dev
+	php bin/console doctrine:database:create --env=dev
+	php bin/console doctrine:schema:update --force --env=dev
+
+prepare-test:
+	make database-test
+	make fixtures-test
+
+prepare-dev:
+	make database-dev
+	make fixtures-dev
+
+prepare-build:
+	make database-test
+	make fixtures-test
+	npm run dev
+
+install:
+	composer install
+	npm install
+.PHONY: install
