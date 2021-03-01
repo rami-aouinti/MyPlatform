@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Security;
 
 use App\Entity\User;
@@ -18,72 +20,37 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
-use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-/**
- * Class WebAuthentificatorAuthenticator
- * @package App\Security
- */
 class WebAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
 {
-    use TargetPathTrait;
-
-    /**
-     *
-     */
     public const LOGIN_ROUTE = 'app_login';
 
-    /**
-     * @var EntityManagerInterface
-     */
     private EntityManagerInterface $entityManager;
-    /**
-     * @var UrlGeneratorInterface
-     */
+
     private UrlGeneratorInterface $urlGenerator;
-    /**
-     * @var CsrfTokenManagerInterface
-     */
+
     private CsrfTokenManagerInterface $csrfTokenManager;
-    /**
-     * @var UserPasswordEncoderInterface
-     */
+
     private UserPasswordEncoderInterface $passwordEncoder;
 
-    /**
-     * WebAuthentificatorAuthenticator constructor.
-     * @param EntityManagerInterface $entityManager
-     * @param UrlGeneratorInterface $urlGenerator
-     * @param CsrfTokenManagerInterface $csrfTokenManager
-     * @param UserPasswordEncoderInterface $passwordEncoder
-     */
     public function __construct(
         EntityManagerInterface $entityManager,
         UrlGeneratorInterface $urlGenerator,
         CsrfTokenManagerInterface $csrfTokenManager,
         UserPasswordEncoderInterface $passwordEncoder
-    )
-    {
+    ) {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
     }
 
-    /**
-     * @param Request $request
-     * @return bool
-     */
     public function supports(Request $request)
     {
         return self::LOGIN_ROUTE === $request->attributes->get('_route')
             && $request->isMethod('POST');
     }
 
-    /**
-     * @param Request $request
-     * @return array
-     */
     public function getCredentials(Request $request)
     {
         $credentials = [
@@ -99,11 +66,6 @@ class WebAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
         return $credentials;
     }
 
-    /**
-     * @param mixed $credentials
-     * @param UserProviderInterface $userProvider
-     * @return object|UserInterface|null
-     */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
         $token = new CsrfToken('authenticate', $credentials['csrf_token']);
@@ -114,18 +76,12 @@ class WebAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
 
         if (!$user) {
-            // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Email could not be found.');
+            throw new CustomUserMessageAuthenticationException('Invalid credentials.');
         }
 
         return $user;
     }
 
-    /**
-     * @param mixed $credentials
-     * @param UserInterface $user
-     * @return bool
-     */
     public function checkCredentials($credentials, UserInterface $user)
     {
         return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
@@ -139,21 +95,11 @@ class WebAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
         return $credentials['password'];
     }
 
-    /**
-     * @param Request $request
-     * @param TokenInterface $token
-     * @param string $providerKey
-     * @return RedirectResponse
-     * @throws \Exception
-     */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
     {
         return new RedirectResponse($this->urlGenerator->generate("index"));
     }
 
-    /**
-     * @return string
-     */
     protected function getLoginUrl()
     {
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);

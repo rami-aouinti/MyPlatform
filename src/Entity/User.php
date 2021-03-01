@@ -6,6 +6,8 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -65,21 +67,40 @@ class User implements UserInterface
      */
     private ?DateTimeImmutable $suspendedAt = null;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="author")
+     */
+    private Collection $posts;
+
+    /**
+     * User constructor.
+     */
     public function __construct()
     {
         $this->registeredAt = new DateTimeImmutable();
+        $this->posts = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
+    /**
+     * @param string $email
+     * @return $this
+     */
     public function setEmail(string $email): self
     {
         $this->email = $email;
@@ -108,6 +129,10 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
+    /**
+     * @param array $roles
+     * @return $this
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
@@ -123,6 +148,10 @@ class User implements UserInterface
         return (string) $this->password;
     }
 
+    /**
+     * @param string $password
+     * @return $this
+     */
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -130,11 +159,18 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
     }
 
+    /**
+     * @param string|null $plainPassword
+     * @return $this
+     */
     public function setPlainPassword(?string $plainPassword): self
     {
         $this->plainPassword = $plainPassword;
@@ -157,22 +193,36 @@ class User implements UserInterface
         $this->plainPassword = null;
     }
 
+    /**
+     * @return string
+     */
     public function getNickname(): string
     {
         return $this->nickname;
     }
 
+    /**
+     * @param string $nickname
+     * @return $this
+     */
     public function setNickname(string $nickname): self
     {
         $this->nickname = $nickname;
         return $this;
     }
 
+    /**
+     * @return DateTimeImmutable|null
+     */
     public function getRegisteredAt(): ?\DateTimeImmutable
     {
         return $this->registeredAt;
     }
 
+    /**
+     * @param DateTimeImmutable $registeredAt
+     * @return $this
+     */
     public function setRegisteredAt(\DateTimeImmutable $registeredAt): self
     {
         $this->registeredAt = $registeredAt;
@@ -180,11 +230,18 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @return DateTimeImmutable|null
+     */
     public function getSuspendedAt(): ?\DateTimeImmutable
     {
         return $this->suspendedAt;
     }
 
+    /**
+     * @param DateTimeImmutable $suspendedAt
+     * @return $this
+     */
     public function setSuspendedAt(\DateTimeImmutable $suspendedAt): self
     {
         $this->suspendedAt = $suspendedAt;
@@ -192,8 +249,19 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function isSuspended(): bool
     {
         return $this->suspendedAt !== null;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getPosts(): Collection
+    {
+        return $this->posts;
     }
 }
