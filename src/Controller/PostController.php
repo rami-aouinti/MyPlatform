@@ -19,7 +19,7 @@ class PostController extends AbstractController
     #[Route('/', name: 'post_index', methods: ['GET'])]
     public function index(PostRepository $postRepository): Response
     {
-        return $this->render('post/index.html.twig', [
+        return $this->render('ui/index.html.twig', [
             'posts' => $postRepository->findAll(),
         ]);
     }
@@ -37,7 +37,7 @@ class PostController extends AbstractController
             $entityManager->persist($post);
             $entityManager->flush();
 
-            return $this->redirectToRoute('post_index');
+            return $this->redirectToRoute('home');
         }
 
         return $this->render('post/new.html.twig', [

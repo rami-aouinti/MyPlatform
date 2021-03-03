@@ -97,7 +97,7 @@ class WebAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
     {
-        return new RedirectResponse($this->urlGenerator->generate("index"));
+        return new RedirectResponse($this->urlGenerator->generate("home"));
     }
 
     protected function getLoginUrl()

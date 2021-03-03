@@ -1,4 +1,70 @@
-{% extends 'base.html.twig' %}
+{% extends 'template/template.html.twig' %}
 {% block body %}
-    <h1>Ramy Platform</h1>
+    <div class="row">
+        <div class="col-md-9">
+            <ul class="timeline timeline-simple">
+                <div class="card-body text-center">
+                    <button class="btn btn-white btn-fill" onclick="demo.showSwal('input-field')">Insert Your post if you want ... </button>
+                </div>
+                {% for post in posts %}
+                <li class="timeline-inverted">
+                    <div class="timeline-badge bg-dark">
+                        <i class="material-icons">face</i>
+                    </div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <span class="badge badge-pill badge-warning">{{ post.author.nickname }}</span>
+                        </div>
+                        <div class="row">
+                            <div class="col-10">
+                                <div class="timeline-body">
+                                    <h3>{{ post.title }}</h3>
+                                    <p>{{ post.description }}</p>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <span class="badge badge-pill badge-warning">11 hours ago</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-warning btn-round btn-fab">
+                            <i class="material-icons">exposure_plus_1</i>
+                        </button>
+                        <hr>
+                        <form>
+                            <input type="text" class="form-control" id="comment" placeholder="comment">
+                            <button class="btn btn-sm btn-info increase"
+                                    data-id="{{ post.id }}"
+                                    data-url="{{ path('comment', {'pid': post.id}) }}">
+                                Send
+                            </button>
+                        </form>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="col-md-3">
+            test
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $(".increase").click(function (e) {
+            var comment = $("#comment").val();
+            var post = $(this).data('id');
+            $.ajax({
+                type: "POST",
+                url: $(this).data('url'),
+                async: true,
+                data: {
+                    comment: comment,
+                    post: post
+                },
+                success: function (response) {
+                }
+            });
+        });
+
+    </script>
 {% endblock %}

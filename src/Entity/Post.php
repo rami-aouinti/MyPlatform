@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\PostRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -45,11 +47,17 @@ class Post
     private User $author;
 
     /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="post")
+     */
+    private Collection $comments;
+
+    /**
      * Post constructor.
      */
     public function __construct()
     {
         $this->publishedAt = new \DateTime();
+        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -142,5 +150,13 @@ class Post
         $this->author = $author;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
     }
 }
