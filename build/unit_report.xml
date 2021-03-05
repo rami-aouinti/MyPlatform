@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="/Users/rami/PhpstormProjects/Platform/tests" tests="5" assertions="4" errors="2" warnings="0" failures="0" skipped="0" time="7.420431">
+    <testsuite name="App\Tests\Functional\LoginTest" file="/Users/rami/PhpstormProjects/Platform/tests/Functional/LoginTest.php" tests="3" assertions="4" errors="0" warnings="0" failures="0" skipped="0" time="7.018036">
+      <testcase name="testIfLoginIsSuccessful" class="App\Tests\Functional\LoginTest" classname="App.Tests.Functional.LoginTest" file="/Users/rami/PhpstormProjects/Platform/tests/Functional/LoginTest.php" line="14" assertions="2" time="4.271865"/>
+      <testsuite name="App\Tests\Functional\LoginTest::testIfCredentialsAreInvalid" tests="2" assertions="2" errors="0" warnings="0" failures="0" skipped="0" time="2.746171">
+        <testcase name="testIfCredentialsAreInvalid with data set #0" class="App\Tests\Functional\LoginTest" classname="App.Tests.Functional.LoginTest" file="/Users/rami/PhpstormProjects/Platform/tests/Functional/LoginTest.php" line="42" assertions="1" time="0.188143"/>
+        <testcase name="testIfCredentialsAreInvalid with data set #1" class="App\Tests\Functional\LoginTest" classname="App.Tests.Functional.LoginTest" file="/Users/rami/PhpstormProjects/Platform/tests/Functional/LoginTest.php" line="42" assertions="1" time="2.558028"/>
+      </testsuite>
+    </testsuite>
+    <testsuite name="App\Tests\Functional\RegistrationTest" file="/Users/rami/PhpstormProjects/Platform/tests/Functional/RegistrationTest.php" tests="2" assertions="0" errors="2" warnings="0" failures="0" skipped="0" time="0.402395">
+      <testcase name="testIfLoginIsSuccessful" class="App\Tests\Functional\RegistrationTest" classname="App.Tests.Functional.RegistrationTest" file="/Users/rami/PhpstormProjects/Platform/tests/Functional/RegistrationTest.php" line="15" assertions="0" time="0.336289">
+        <error type="InvalidArgumentException">App\Tests\Functional\RegistrationTest::testIfLoginIsSuccessful
+InvalidArgumentException: Unreachable field "user".
+
+/Users/rami/PhpstormProjects/Platform/vendor/symfony/dom-crawler/FormFieldRegistry.php:80
+/Users/rami/PhpstormProjects/Platform/vendor/symfony/dom-crawler/FormFieldRegistry.php:113
+/Users/rami/PhpstormProjects/Platform/vendor/symfony/dom-crawler/Form.php:75
+/Users/rami/PhpstormProjects/Platform/vendor/symfony/dom-crawler/Crawler.php:898
+/Users/rami/PhpstormProjects/Platform/tests/Functional/RegistrationTest.php:29</error>
+      </testcase>
+      <testcase name="testIfEmailAlreadyExist" class="App\Tests\Functional\RegistrationTest" classname="App.Tests.Functional.RegistrationTest" file="/Users/rami/PhpstormProjects/Platform/tests/Functional/RegistrationTest.php" line="41" assertions="0" time="0.066107">
+        <error type="InvalidArgumentException">App\Tests\Functional\RegistrationTest::testIfEmailAlreadyExist
+InvalidArgumentException: Unreachable field "user".
+
+/Users/rami/PhpstormProjects/Platform/vendor/symfony/dom-crawler/FormFieldRegistry.php:80
+/Users/rami/PhpstormProjects/Platform/vendor/symfony/dom-crawler/FormFieldRegistry.php:113
+/Users/rami/PhpstormProjects/Platform/vendor/symfony/dom-crawler/Form.php:75
+/Users/rami/PhpstormProjects/Platform/vendor/symfony/dom-crawler/Crawler.php:898
+/Users/rami/PhpstormProjects/Platform/tests/Functional/RegistrationTest.php:51</error>
+      </testcase>
+    </testsuite>
+  </testsuite>
+</testsuites>

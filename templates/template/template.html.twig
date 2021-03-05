@@ -15,11 +15,11 @@
         <!-- Material Kit CSS -->
         <link href="{{ asset('assets/admin/assets/css/material-dashboard.css?v=2.2.2') }}" rel="stylesheet" />
         {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
+            {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
         {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
+            {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
     <body>
@@ -31,10 +31,10 @@
             Tip 2: you can also add an image using data-image tag
           -->
             <div class="logo">
-                <a href="http://www.creative-tim.com" class="simple-text logo-mini">
-                    CT
+                <a href="{{ path('home') }}" class="simple-text logo-mini">
+                    RM
                 </a>
-                <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+                <a href="{{ path('home') }}" class="simple-text logo-normal">
                     My Platform
                 </a>
             </div>

@@ -264,7 +264,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection
+     * @return Collection|Post[]
      */
     public function getPosts(): Collection
     {

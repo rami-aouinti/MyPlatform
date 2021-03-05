@@ -1,0 +1,46 @@
+{% extends 'template/template.html.twig' %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-testimonial">
+                <div class="icon">
+                    <i class="material-icons">format_quote</i> {{ post.title }}
+                </div>
+                <div class="card-body">
+                    <h5 class="card-description">
+                        {{ post.description }}
+                    </h5>
+                </div>
+                <div class="card-footer">
+                    <h4 class="card-title">{{ post.author.nickname }}</h4>
+                    <h6 class="card-category">@alecthompson</h6>
+                    <div class="card-avatar">
+                        <a href="#pablo">
+                            <img class="img" src="{{ asset('assets/admin/assets/img/faces/card-profile1-square.jpg') }}" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-description">
+                        {% for comment in post.comments %}
+                            <li>
+                               {{ comment.author.nickname}} :  {{ comment.comment }}
+                            </li>
+                        {% endfor %}
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

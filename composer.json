@@ -29,7 +29,7 @@
         "symfony/mailer": "5.2.*",
         "symfony/maker-bundle": "^1.29",
         "symfony/mime": "5.2.*",
-        "symfony/monolog-bundle": "^3.1",
+        "symfony/monolog-bundle": "^3.6",
         "symfony/notifier": "5.2.*",
         "symfony/process": "5.2.*",
         "symfony/property-access": "5.2.*",
@@ -41,6 +41,7 @@
         "symfony/string": "5.2.*",
         "symfony/translation": "5.2.*",
         "symfony/twig-bundle": "^5.2",
+        "symfony/uid": "5.2.*",
         "symfony/validator": "5.2.*",
         "symfony/web-link": "5.2.*",
         "symfony/webpack-encore-bundle": "^1.11",
@@ -49,6 +50,7 @@
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
+        "dama/doctrine-test-bundle": "^6.5",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "escapestudios/symfony2-coding-standard": "3.x-dev",
         "fzaninotto/faker": "^1.5",

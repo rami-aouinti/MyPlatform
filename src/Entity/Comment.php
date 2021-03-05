@@ -43,7 +43,7 @@ class Comment
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="comment_parent")
      */
-    private ArrayCollection $comments;
+    private Collection $comments;
 
     /**
      * @ORM\Column(type="datetime")
@@ -95,10 +95,10 @@ class Comment
     }
 
     /**
-     * @param User|null $author
+     * @param User $author
      * @return $this
      */
-    public function setAuthor(?User $author): self
+    public function setAuthor(User $author): self
     {
         $this->author = $author;
 

@@ -6,6 +6,10 @@
                 <div class="card-body text-center">
                     <button class="btn btn-white btn-fill" onclick="demo.showSwal('input-field')">Insert Your post if you want ... </button>
                 </div>
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button class="btn">{{ button_label|default('Save') }}</button>
+                {{ form_end(form) }}
                 {% for post in posts %}
                 <li class="timeline-inverted">
                     <div class="timeline-badge bg-dark">
@@ -26,18 +30,22 @@
                                 <span class="badge badge-pill badge-warning">11 hours ago</span>
                             </div>
                         </div>
-                        <button class="btn btn-warning btn-round btn-fab">
-                            <i class="material-icons">exposure_plus_1</i>
-                        </button>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col 10"></div>
+                                <div class="col 1">
+                                    <a class="btn btn-warning" href="{{ path('post_show', {id: post.id}) }}">
+                                        Show
+                                    </a>
+                                </div>
+                                <div class="col 1">
+                                    <a class="btn btn-warning">
+                                        Like
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                         <hr>
-                        <form>
-                            <input type="text" class="form-control" id="comment" placeholder="comment">
-                            <button class="btn btn-sm btn-info increase"
-                                    data-id="{{ post.id }}"
-                                    data-url="{{ path('comment', {'pid': post.id}) }}">
-                                Send
-                            </button>
-                        </form>
                     </div>
                 </li>
                 {% endfor %}
@@ -48,23 +56,32 @@
             test
         </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script>
-        $(".increase").click(function (e) {
-            var comment = $("#comment").val();
-            var post = $(this).data('id');
-            $.ajax({
-                type: "POST",
-                url: $(this).data('url'),
-                async: true,
-                data: {
-                    comment: comment,
-                    post: post
-                },
-                success: function (response) {
-                }
-            });
-        });
 
-    </script>
+    <div class="row">
+        <div class="col-md-2">
+
+        </div>
+        <div class="col-md-8">
+            <ul class="pagination pagination-warning">
+                {% if page > 1 %}
+                    <li class="page-item"><a class="page-link" href="{{ path('home', {page: 1}) }}">First page</a></li>
+                {% endif %}
+                {% if page > 1 %}
+                    <li class="page-item"><a class="page-link" href="{{ path('home', {page: page - 1}) }}">Previous</a></li>
+                {% endif %}
+                {% for p in range %}
+                    <li class="page-item {{ page == p  ? "active" : "" }}"><a class="page-link" href="{{ path('home', {page: p}) }}">{{ p }}</a></li>
+                {% endfor %}
+                {% if page < pages %}
+                    <li class="page-item"><a class="page-link" href="{{ path('home', {page: page + 1}) }}">Next</a></li>
+                {% endif %}
+                {% if page < pages %}
+                    <li class="page-item"><a class="page-link" href="{{ path('home', {page: pages}) }}">Last page</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="col-md-2">
+
+        </div>
+    </div>
 {% endblock %}

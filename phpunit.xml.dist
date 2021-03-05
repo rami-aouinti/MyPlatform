@@ -21,20 +21,16 @@
             <directory>tests</directory>
         </testsuite>
     </testsuites>
-
-    <coverage processUncoveredFiles="true">
-        <include>
-            <directory suffix=".php">src</directory>
-        </include>
-        <report>
-            <clover outputFile="var/reports/coverage_clover.xml"/>
-        </report>
-    </coverage>
-
     <listeners>
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
     </listeners>
 
+    <extensions>
+        <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
+    </extensions>
+    <logging>
+        <testdoxHtml outputFile="coverage/html_report.html"/>
+    </logging>
     <!-- Run `composer require symfony/panther` before enabling this extension -->
     <!--
     <extensions>
