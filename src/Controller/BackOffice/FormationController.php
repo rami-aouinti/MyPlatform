@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class FormationController
  * @package App\Controller\BackOffice
- * @Route("/admin/formations")
+ * @Route("/formations")
  */
 class FormationController extends AbstractController
 {
@@ -27,7 +27,7 @@ class FormationController extends AbstractController
     {
         $formations = $formationRepository->findAll();
 
-        return $this->render("back_office/formation/manage.html.twig", [
+        return $this->render("portfolio/formation/manage.html.twig", [
             "formations" => $formations
         ]);
     }
@@ -50,7 +50,7 @@ class FormationController extends AbstractController
             return $this->redirectToRoute("formation_manage");
         }
 
-        return $this->render("back_office/formation/create.html.twig", [
+        return $this->render("portfolio/formation/create.html.twig", [
             "form" => $form->createView()
         ]);
     }
@@ -72,7 +72,7 @@ class FormationController extends AbstractController
             return $this->redirectToRoute("formation_manage");
         }
 
-        return $this->render("back_office/formation/update.html.twig", [
+        return $this->render("portfolio/formation/update.html.twig", [
             "form" => $form->createView()
         ]);
     }

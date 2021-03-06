@@ -6,6 +6,7 @@
 parameters:
     uploadDir: 'uploads'
     uploadAbsoluteDir: '%kernel.project_dir%/public/%uploadDir%'
+    brochures_directory: '%kernel.project_dir%/public/uploads/images'
 
 services:
     # default configuration for services in *this* file
@@ -37,5 +38,9 @@ services:
     App\EntityListener\:
         resource: '../src/EntityListener'
         tags: ['doctrine.orm.entity_listener']
+
+    App\Service\FileUploader:
+        arguments:
+            $targetDirectory: '%brochures_directory%'
 
 

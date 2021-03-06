@@ -55,9 +55,9 @@ class MediaListener
     private function upload(Media $media): void
     {
         if ($media->getFile() instanceof UploadedFile) {
-            $filename = sprintf("%s.%s",Uuid::v4(), $media->getFile()->getClientOriginalExtension());
+            $filename = sprintf("%s.%s", Uuid::v4(), $media->getFile()->getClientOriginalExtension());
             $media->getFile()->move($this->uploadAbsoluteDir, $filename);
-            $media->setPath(sprintf("%s/%s",$this->uploadDir, $filename));
+            $media->setPath(sprintf("%s/%s", $this->uploadDir, $filename));
         }
     }
 }

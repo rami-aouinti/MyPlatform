@@ -1,0 +1,9 @@
+{% extends "template/template.html.twig" %}
+
+{% block body %}
+    <div class="row justify-content-center">
+        <div class="col-12">
+            {% include 'portfolio/reference/_form.html.twig' with { form: form, title: "Créer une nouvelle référence", action: "Créer" } %}
+        </div>
+    </div>
+{% endblock %}

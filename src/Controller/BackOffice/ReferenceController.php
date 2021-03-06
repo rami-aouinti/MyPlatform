@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class ReferenceController
  * @package App\Controller\BackOffice
- * @Route("/admin/references")
+ * @Route("/references")
  */
 class ReferenceController extends AbstractController
 {
@@ -27,7 +27,7 @@ class ReferenceController extends AbstractController
     {
         $references = $referenceRepository->findAll();
 
-        return $this->render("back_office/reference/manage.html.twig", [
+        return $this->render("portfolio/reference/manage.html.twig", [
             "references" => $references
         ]);
     }
@@ -50,7 +50,7 @@ class ReferenceController extends AbstractController
             return $this->redirectToRoute("reference_manage");
         }
 
-        return $this->render("back_office/reference/create.html.twig", [
+        return $this->render("portfolio/reference/create.html.twig", [
             "form" => $form->createView()
         ]);
     }
@@ -72,7 +72,7 @@ class ReferenceController extends AbstractController
             return $this->redirectToRoute("reference_manage");
         }
 
-        return $this->render("back_office/reference/update.html.twig", [
+        return $this->render("portfolio/reference/update.html.twig", [
             "form" => $form->createView()
         ]);
     }

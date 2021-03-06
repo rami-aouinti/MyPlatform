@@ -2,13 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Media;
+use App\Entity\Profile;
 use App\Entity\User;
 use App\Form\ProfileType;
+use App\Repository\ProfileRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\FileUploader;
 
 class ProfileController extends AbstractController
 {
@@ -21,23 +26,47 @@ class ProfileController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @param User $user
+     * @param ProfileRepository $profileRepository
+     * @param FileUploader $fileUploader
+     * @return Response
+     */
     #[Route('profile/{id}/edit', name: 'profile_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user): Response
-    {
-        if ($this->getUser()->getId() != $user->getId()) {
+    public function edit(
+        Request $request,
+        User $user,
+        ProfileRepository $profileRepository,
+        FileUploader $fileUploader
+    ): Response {
+        /** @var Profile $profile */
+        $profile = $profileRepository->findOneBy([
+            'user' => $user
+        ]);
+        if ($user->getId() != $this->getUser()->getId()) {
             return $this->redirectToRoute('home');
         }
-        $form = $this->createForm(ProfileType::class, $user);
+        $form = $this->createForm(ProfileType::class, $profile);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $brochureFile */
+            $brochureFile = $form->get('brochure')->getData();
+            if ($brochureFile) {
+                $brochureFileName = $fileUploader->upload($brochureFile);
+                $profile->setBrochureFilename($brochureFileName);
+            }
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('profile');
+            return $this->redirectToRoute('profile_edit', [
+                'id' => $this->getUser()->getId()
+            ]);
         }
 
         return $this->render('profile/edit.html.twig', [
             'user' => $user,
+            'profile' => $profile,
             'form' => $form->createView(),
         ]);
     }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Media;
+use App\Entity\Profile;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Security\WebAuthenticator;
@@ -29,6 +31,12 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->persist($user);
+
+            $profile = new Profile();
+            $profile->setUser($user);
+            $profile->setBrochureFilename('test.png');
+            $this->getDoctrine()->getManager()->persist($profile);
+
             $this->getDoctrine()->getManager()->flush();
 
             return $guardAuthenticatorHandler->authenticateUserAndHandleSuccess(

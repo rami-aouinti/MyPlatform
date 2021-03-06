@@ -26,7 +26,7 @@ class User implements UserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private ?int $id = null;
+    protected ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
@@ -78,6 +78,36 @@ class User implements UserInterface
     private Collection $comments;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Formation", mappedBy="user")
+     */
+    private Collection $formations;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Reference", mappedBy="user")
+     */
+    private Collection $references;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Skill", mappedBy="user")
+     */
+    private Collection $skills;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Language", mappedBy="user")
+     */
+    private Collection $languages;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Hobby", mappedBy="user")
+     */
+    private Collection $hobbies;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Profile", mappedBy="user")
+     */
+    private Profile $profile;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -85,6 +115,11 @@ class User implements UserInterface
         $this->registeredAt = new DateTimeImmutable();
         $this->posts = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->formations = new ArrayCollection();
+        $this->skills = new ArrayCollection();
+        $this->references = new ArrayCollection();
+        $this->languages = new ArrayCollection();
+        $this->hobbies = new ArrayCollection();
     }
 
     /**
@@ -272,6 +307,46 @@ class User implements UserInterface
     }
 
     /**
+     * @return Collection|Formation[]
+     */
+    public function getFormations(): Collection
+    {
+        return $this->formations;
+    }
+
+    /**
+     * @return Collection|Reference[]
+     */
+    public function getReferences(): Collection
+    {
+        return $this->references;
+    }
+
+    /**
+     * @return Collection|Skill[]
+     */
+    public function getSkills(): Collection
+    {
+        return $this->skills;
+    }
+
+    /**
+     * @return Collection|Language[]
+     */
+    public function getLanguages(): Collection
+    {
+        return $this->languages;
+    }
+
+    /**
+     * @return Collection|Hobby[]
+     */
+    public function getHobbies(): Collection
+    {
+        return $this->hobbies;
+    }
+
+    /**
      * @return Collection|Comment[]
      */
     public function getComments(): Collection
@@ -279,6 +354,10 @@ class User implements UserInterface
         return $this->comments;
     }
 
+    /**
+     * @param Comment $comment
+     * @return $this
+     */
     public function addComment(Comment $comment): self
     {
         if (!$this->comments->contains($comment)) {
@@ -289,6 +368,10 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @param Comment $comment
+     * @return $this
+     */
     public function removeComment(Comment $comment): self
     {
         if ($this->comments->removeElement($comment)) {
@@ -299,5 +382,13 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @return Profile
+     */
+    public function getProfile(): Profile
+    {
+        return $this->profile;
     }
 }

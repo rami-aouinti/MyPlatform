@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class SkillController
  * @package App\Controller\BackOffice
- * @Route("/admin/skills")
+ * @Route("/skills")
  */
 class SkillController extends AbstractController
 {
@@ -27,7 +27,7 @@ class SkillController extends AbstractController
     {
         $skills = $skillRepository->findAll();
 
-        return $this->render("back_office/skill/manage.html.twig", [
+        return $this->render("portfolio/skill/manage.html.twig", [
             "skills" => $skills
         ]);
     }
@@ -50,7 +50,7 @@ class SkillController extends AbstractController
             return $this->redirectToRoute("skill_manage");
         }
 
-        return $this->render("back_office/skill/create.html.twig", [
+        return $this->render("portfolio/skill/create.html.twig", [
             "form" => $form->createView()
         ]);
     }
@@ -72,7 +72,7 @@ class SkillController extends AbstractController
             return $this->redirectToRoute("skill_manage");
         }
 
-        return $this->render("back_office/skill/update.html.twig", [
+        return $this->render("portfolio/skill/update.html.twig", [
             "form" => $form->createView()
         ]);
     }

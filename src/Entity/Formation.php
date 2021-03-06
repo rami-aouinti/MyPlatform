@@ -5,6 +5,7 @@ namespace App\Entity;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Class Formation
@@ -18,12 +19,14 @@ class Formation
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
+     * @Groups({"get"})
      */
     private ?int $id = null;
 
     /**
      * @var string|null
      * @ORM\Column
+     * @Groups({"get"})
      * @Assert\NotBlank(message="Ce champ ne peut pas être vide.")
      */
     private ?string $name = null;
@@ -31,6 +34,7 @@ class Formation
     /**
      * @var string|null
      * @ORM\Column
+     * @Groups({"get"})
      * @Assert\NotBlank(message="Ce champ ne peut pas être vide.")
      */
     private ?string $school = null;
@@ -38,6 +42,7 @@ class Formation
     /**
      * @var int|null
      * @ORM\Column(type="integer")
+     * @Groups({"get"})
      * @Assert\NotBlank(message="Ce champ ne peut pas être vide.")
      */
     private ?int $gradeLevel = null;
@@ -45,6 +50,7 @@ class Formation
     /**
      * @var string|null
      * @ORM\Column(type="text")
+     * @Groups({"get"})
      * @Assert\NotBlank(message="Ce champ ne peut pas être vide.")
      */
     private ?string $description = null;
@@ -52,6 +58,7 @@ class Formation
     /**
      * @var DateTimeInterface|null
      * @ORM\Column(type="date_immutable")
+     * @Groups({"get"})
      * @Assert\NotBlank(message="Ce champ ne peut pas être vide.")
      */
     private ?DateTimeInterface $startedAt = null;
@@ -59,8 +66,14 @@ class Formation
     /**
      * @var DateTimeInterface|null
      * @ORM\Column(type="date_immutable", nullable=true)
+     * @Groups({"get"})
      */
     private ?DateTimeInterface $endedAt = null;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="formations")
+     */
+    private User $user;
 
     /**
      * @return int|null
@@ -164,5 +177,24 @@ class Formation
     public function setEndedAt(?DateTimeInterface $endedAt): void
     {
         $this->endedAt = $endedAt;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     * @return $this
+     */
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }

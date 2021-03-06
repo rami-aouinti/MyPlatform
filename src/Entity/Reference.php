@@ -73,6 +73,11 @@ class Reference
     private Collection $medias;
 
     /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="references")
+     */
+    private User $user;
+
+    /**
      * Reference constructor.
      */
     public function __construct()
@@ -197,5 +202,24 @@ class Reference
             $this->medias->removeElement($media);
 
         }
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     * @return $this
+     */
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }

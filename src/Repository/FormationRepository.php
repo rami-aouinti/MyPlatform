@@ -9,6 +9,10 @@ use Doctrine\Persistence\ManagerRegistry;
 /**
  * Class FormationRepository
  * @package App\Repository
+ * @method Formation|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Formation|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Formation[]    findAll()
+ * @method Formation[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class FormationRepository extends ServiceEntityRepository
 {

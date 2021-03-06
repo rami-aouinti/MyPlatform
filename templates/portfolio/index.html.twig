@@ -1,9 +1,10 @@
 {% extends 'template/template.html.twig' %}
 {% block body %}
     <div class="row">
+        <a href="{{ path('resume') }}" class="btn btn-danger btn-round">Generate Resume</a>
         <div class="col-12">
-            <h1>Thomas Boileau</h1>
-            <h2>Dévelopeur web</h2>
+            <h1>{{ app.user.profile.firstname }} {{ app.user.profile.lastname }}</h1>
+            <h2>{{ app.user.profile.title }}</h2>
             <h3>Formations</h3>
             <div id="formations"></div>
             <h3>Compétences</h3>
