@@ -1,0 +1,205 @@
+{% extends 'template/template.html.twig' %}
+
+{% block title %}Profile!{% endblock %}
+
+{% block body %}
+   <div class="row">
+      <div class="col-md-12">
+         <div class="card card-testimonial">
+            <div class="icon">
+               <i class="material-icons">format_quote</i>
+            </div>
+            <div class="card-body">
+               <h5 class="card-description">
+                  {{ user.profile.description }}
+               </h5>
+            </div>
+            <div class="card-footer">
+               <h4 class="card-title">{{ user.profile.firstname }} {{ user.profile.lastname }}</h4>
+               <h6 class="card-category">@ {{ user.profile.title }}</h6>
+               <div class="card-avatar">
+                  <a href="#">
+                     {% if user.profile.brochureFilename %}
+                        <img src="{{ asset('uploads/images/' ~ user.profile.brochureFilename) }}" />
+                     {% else %}
+                        <img src="{{ asset('assets/admin/assets/img/default-avatar.png') }}" />
+                     {% endif %}
+                  </a>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-md-10 ml-auto mr-auto">
+         <div class="page-categories">
+            <h3 class="title text-center">Page Subcategories</h3>
+            <br />
+            <ul class="nav nav-pills nav-pills-warning nav-pills-icons justify-content-center" role="tablist">
+               <li class="nav-item">
+                  <a class="nav-link active" data-toggle="tab" href="#link7" role="tablist">
+                     <i class="material-icons">info</i> Description
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#link8" role="tablist">
+                     <i class="material-icons">location_on</i> Location
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#link9" role="tablist">
+                     <i class="material-icons">auto_awesome_mosaic</i> Posts
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#link10" role="tablist">
+                     <i class="material-icons">add_a_photo</i> Gallery
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#link11" role="tablist">
+                     <i class="material-icons">auto_stories</i> CV
+                  </a>
+               </li>
+            </ul>
+            <div class="tab-content tab-space tab-subcategories">
+               <div class="tab-pane active" id="link7">
+                  <div class="card">
+                     <div class="card-header">
+                        <h4 class="card-title">Global Data</h4>
+                     </div>
+                     <div class="card-body">
+                        <h4>{{ user.profile.firstname }} {{ user.profile.lastname }}</h4>
+                        <h4>{{ user.profile.birthdayDate|date('y-m-d') }}</h4>
+                        <h4>{{ user.profile.nationality }}</h4>
+                     </div>
+                  </div>
+               </div>
+               <div class="tab-pane" id="link8">
+                  <div class="card">
+                     <div class="card-header">
+                        <h4 class="card-title">Location of the product</h4>
+                        <p class="card-category">
+                           More information here
+                        </p>
+                     </div>
+                     <div class="card-body">
+                        Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas.
+                        <br>
+                        <br> Dramatically maintain clicks-and-mortar solutions without functional solutions.
+                     </div>
+                  </div>
+               </div>
+               <div class="tab-pane" id="link9">
+                  <div class="card">
+                     <div class="card-header">
+                        <h4 class="card-title">Legal info of the product</h4>
+                        <p class="card-category">
+                           More information here
+                        </p>
+                     </div>
+                     <div class="card-body">
+                        Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas.
+                        <br>
+                        <br>Dynamically innovate resource-leveling customer service for state of the art customer service.
+                     </div>
+                  </div>
+               </div>
+               <div class="tab-pane" id="link10">
+                  <div class="card">
+                     <div class="card-header">
+                        <h4 class="card-title">Help center</h4>
+                        <p class="card-category">
+                           More information here
+                        </p>
+                     </div>
+                     <div class="card-body">
+                        From the seamless transition of glass and metal to the streamlined profile, every detail was carefully considered to enhance your experience. So while its display is larger, the phone feels just right.
+                        <br>
+                        <br> Another Text. The first thing you notice when you hold the phone is how great it feels in your hand. The cover glass curves down around the sides to meet the anodized aluminum enclosure in a remarkable, simplified design.
+                     </div>
+                  </div>
+               </div>
+               <div class="tab-pane" id="link11">
+                  <div class="card">
+                     <div class="card-header">
+                        <a href="{{ path('generate_resume') }}" target = "_blank" class="btn btn-success btn-round">Generate Resume</a>
+                     </div>
+                     <div class="card-body">
+                        <div class="row">
+                           <div class="col-md-6">
+                              <div class="row">
+                                 <div class="col-md-12">
+                                    <div class="alert alert-default">
+                                       <div class="card-header d-flex justify-content-between align-items-center">
+                                          <h3 style="color: #0a0a0a">Training</h3>
+                                          <a href="{{ path("formation_create") }}" class="btn btn-white"><i class="fas fa-edit"></i></a>
+                                       </div>
+                                    </div>
+                                    <ul class="timeline timeline-simple" id="formations"></ul>
+                                 </div>
+                                 <div class="col-md-12">
+                                    <div class="alert alert-default">
+                                       <div class="card-header d-flex justify-content-between align-items-center">
+                                          <h3 style="color: #0a0a0a">References</h3>
+                                          <a href="{{ path("reference_create") }}" class="btn btn-white"><i class="fas fa-edit"></i></a>
+                                       </div>
+                                    </div>
+                                    <div id="references" class="row"></div>
+                                 </div>
+                              </div>
+
+                           </div>
+                           <div class="col-md-6">
+                              <div class="row">
+                                 <div class="col-md-12">
+                                    <div class="alert alert-default">
+                                       <div class="card-header d-flex justify-content-between align-items-center">
+                                          <h3 style="color: #0a0a0a">Skills</h3>
+                                          <a href="{{ path("reference_create") }}" class="btn btn-white"><i class="fas fa-edit"></i></a>
+                                       </div>
+                                    </div>
+                                    <div class="card">
+                                       <div class="card-body">
+                                          <ul class="list-group" id="skills"></ul>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-12">
+                                    <div class="alert alert-default">
+                                       <div class="card-header d-flex justify-content-between align-items-center">
+                                          <h3 style="color: #0a0a0a">Languages</h3>
+                                          <a href="{{ path("language_create") }}" class="btn btn-white"><i class="fas fa-edit"></i></a>
+                                       </div>
+                                    </div>
+                                    <div class="card">
+                                       <div class="card-body">
+                                          <ul class="list-group" id="languages"></ul>
+                                       </div>
+                                    </div>
+                                 </div>
+
+                                 <div class="col-md-12">
+                                    <div class="alert alert-default">
+                                       <div class="card-header d-flex justify-content-between align-items-center">
+                                          <h3 style="color: #0a0a0a">Hobbies</h3>
+                                          <a href="{{ path("hobby_create") }}" class="btn btn-white"><i class="fas fa-edit"></i></a>
+                                       </div>
+                                    </div>
+                                    <div class="card">
+                                       <div class="card-body">
+                                          <ul class="list-group" id="hobbies"></ul>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+{% endblock %}

@@ -2,12 +2,14 @@
     {% if app.user %}
     <div class="user">
         <div class="photo">
+            {% if app.user.profile.brochureFilename %}
+                <img class="img" src="{{ asset('uploads/images/' ~ app.user.profile.brochureFilename) }}" />
+            {% endif %}
             <img src="{{ asset('assets/admin/assets/img/faces/avatar.jpg') }}" />
         </div>
         <div class="user-info">
             <a  href="{{ path('profile_edit', {id: app.user.id}) }}" class="username">
               <span>
-
                     {{ app.user.nickname }}
               </span>
             </a>
@@ -21,47 +23,90 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{ path('friend_index') }}">
             <i class="material-icons">supervisor_account</i>
-            <p>Friends</p>
+            <p>Friends ({{ friends.list()|length }})</p>
         </a>
     </li>
     <!-- your sidebar here -->
     <li class="nav-item ">
-        <a class="nav-link" data-toggle="collapse" href="#componentsCollapse">
+        <a class="nav-link" href="{{ path('portfolio') }}">
             <i class="material-icons">desktop_mac</i>
-            <span class="sidebar-mini"> P </span>
-            <span class="sidebar-normal"> My Portfolio
-                      <b class="caret"></b>
-                    </span>
+            <span class="sidebar-normal"> My Portfolio </span>
         </a>
-        <div class="collapse" id="componentsCollapse">
-            <ul class="nav">
-                <li class="nav-item ">
-                    <a class="nav-link" href="{{ path('portfolio') }}">
-                        <span class="sidebar-mini"> S </span>
-                        <span class="sidebar-normal"> Show </span>
-                    </a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="{{ path('formation_manage') }}">
-                        <span class="sidebar-mini"> F </span>
-                        <span class="sidebar-normal"> Formations </span>
-                    </a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="{{ path('skill_manage') }}">
-                        <span class="sidebar-mini"> S </span>
-                        <span class="sidebar-normal"> Skills </span>
-                    </a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="{{ path('reference_manage') }}">
-                        <span class="sidebar-mini"> S </span>
-                        <span class="sidebar-normal"> References </span>
-                    </a>
-                </li>
-            </ul>
-        </div>
     </li>
+
+    <!-- Shop Market -->
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('generate_resume') }}">
+            <i class="material-icons">wysiwyg</i>
+            <p>Resume</p>
+        </a>
+    </li>
+
+    <!-- Shop Market -->
+
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="material-icons">shopping_cart</i>
+            <p>Shop</p>
+        </a>
+    </li>
+
+    <!-- Jobs -->
+
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="material-icons">work</i>
+            <p>Jobs</p>
+        </a>
+    </li>
+
+    <!-- Events -->
+
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="material-icons">event</i>
+            <p>Events</p>
+        </a>
+    </li>
+
+    <!-- Plan -->
+
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="material-icons">date_range</i>
+            <p>Plan</p>
+        </a>
+    </li>
+
+    <!-- Projects -->
+
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="material-icons">group_work</i>
+            <p>Projects</p>
+        </a>
+    </li>
+
+    <!-- Projects -->
+
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="material-icons">videocam</i>
+            <p>Live</p>
+        </a>
+    </li>
+
+    <!-- Logout -->
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('app_logout')}}">
+            <i class="material-icons">logout</i>
+            <p>Logout</p>
+        </a>
+    </li>
+    {% endif %}
+
 </ul>

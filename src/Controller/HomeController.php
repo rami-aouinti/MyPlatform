@@ -9,6 +9,7 @@ use App\Form\PostType;
 use App\Handler\CommentHandler;
 use App\Handler\PostHandler;
 use App\Repository\PostRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,8 +30,11 @@ class HomeController extends AbstractController
     }
 
     #[Route('/', name: 'home')]
-    public function index(PostRepository $postRepository, Request $request, PostHandler $postHandler): Response
-    {
+    public function index(
+        PostRepository $postRepository,
+        Request $request,
+        PostHandler $postHandler
+    ): Response {
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
@@ -50,6 +54,11 @@ class HomeController extends AbstractController
              max($page - 3, 1),
              min($page +3, $pages)
          );
+        foreach ($posts as $post) {
+            $differenceDate = $this->differenceDate($post->getPublishedAt());
+            $post->setDescription($differenceDate);
+        }
+
          return $this->render('ui/index.html.twig', [
              'posts' => $posts,
              'pages' => $pages,
@@ -80,5 +89,53 @@ class HomeController extends AbstractController
             'post' => $post,
             'form' => $commentHandler->createView(),
         ]);
+    }
+
+    #[Route('post/{id}/edit', name: 'post_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Post $post): Response
+    {
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('post/edit.html.twig', [
+            'friend' => $post,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('post/{id}', name: 'post_delete', methods: ['DELETE'])]
+    public function delete(Request $request, Post $post): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($post);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('home');
+    }
+
+    /**
+     * @param $date
+     * @return string
+     */
+    private function differenceDate($date): string
+    {
+        $now = new DateTime();
+        $days = $date->diff($now)->format("%d");
+        $hours = $date->diff($now)->format("%h");
+        if ($days != "0") {
+            return $days . ' days';
+        } elseif ($hours != "0") {
+            return $hours . ' hours';
+        } else {
+            return $date->diff($now)->format("%i minutes");
+        }
     }
 }

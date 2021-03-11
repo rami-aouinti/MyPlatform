@@ -2,23 +2,40 @@ import '../styles/app.scss';
 import $ from 'jquery';
 import 'popper.js';
 import moment from 'moment';
+import Vue from 'vue';
+import App from './components/App';
+
+const app = new Vue({
+    el: '#app',
+    render: h => h(App)
+});
 
 moment.locale("en_EN");
-console.log('hi');
 if ($("#formations").length > 0) {
     $.getJSON("/api/formations", formations => {
         formations.forEach(formation => {
             $("#formations").append(`
-                <div class="d-flex">
-                    <div>
-                        ${moment(formation.startedAt).format("YYYY")} - ${formation.endedAt === null ? "Aujourd'hui" : moment(formation.endedAt).format("YYYY")}
+
+                <li class="timeline-inverted">
+                    <div class="timeline-badge warning">
+                        <i class="material-icons">card_travel</i>
                     </div>
-                    <div>
-                        <h4>${formation.name}</h4>
-                        <span class="text-muted">${formation.school} - BAC+${formation.gradeLevel}</span>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <span class="badge badge-pill badge-warning">
+                             ${moment(formation.startedAt).format("YYYY")} - ${formation.endedAt === null ? "Today" : moment(formation.endedAt).format("YYYY")}
+                            </span>
+                        </div>
+                        <div class="timeline-body">
+                        <p>${formation.name}</p>
+                            <span class="text-muted">${formation.school} - BAC+${formation.gradeLevel}</span>
                         <p>${formation.description}</p>
-                    </div>                
-                </div>
+                        </div>
+                        <h6>
+                            <i class="ti-time"></i> 11 hours ago via Twitter
+                        </h6>
+                    </div>
+                </li>
             `);
         });
     })
@@ -27,8 +44,52 @@ if ($("#formations").length > 0) {
 if ($("#skills").length > 0) {
     $.getJSON("/api/skills", skills => {
         skills.forEach(skill => {
+            var stars = '';
+            for (var i= 0; i <10; i++) {
+                if ( i < skill.level) {
+                    stars = stars + '<span class="material-icons">' + 'star' + '</span>'
+                } else {
+                    stars = stars + '<span class="material-icons">' + 'star_border' + '</span>'
+                }
+            }
             $("#skills").append(`
-                <li class="list-group-item">${skill.name} - ${skill.level}/10</li>
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3"><h4>${skill.name}</h4></div>
+                    <div class="col-md-8">${stars}</div>
+                </div>
+            `);
+        });
+    })
+}
+
+if ($("#languages").length > 0) {
+    $.getJSON("/api/languages", languages => {
+        languages.forEach(language => {
+            var stars = '';
+            for (var i= 0; i <10; i++) {
+                if ( i < language.level) {
+                    stars = stars + '<span class="material-icons">' + 'star' + '</span>'
+                } else {
+                    stars = stars + '<span class="material-icons">' + 'star_border' + '</span>'
+                }
+            }
+            $("#languages").append(`
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3"><h4>${language.name}</h4></div>
+                    <div class="col-md-8">${stars}</div>
+                </div>
+            `);
+        });
+    })
+}
+
+if ($("#hobbies").length > 0) {
+    $.getJSON("/api/hobbies", hobbies => {
+        hobbies.forEach(hobby => {
+            $("#hobbies").append(`
+                <li class="list-group-item">${hobby.name}</li>
             `);
         });
     })
@@ -38,19 +99,44 @@ if ($("#references").length > 0) {
     $.getJSON("/api/references", references => {
         references.forEach(reference => {
             $("#references").append(`
-                <div class="col-12 col-md-6 col-lg-4 col-xl-3 my-1">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>${reference.title}</h4>
-                            <span class="text-muted">${reference.company} - ${moment(reference.startedAt).format("YYYY")} - ${reference.endedAt === null ? "Aujourd'hui" : moment(reference.endedAt).format("YYYY")}</span>
+                <div class="col-md-6">
+                    <div class="card card-product">
+                        <div class="card-header card-header-image" data-header-animation="true">
+                            <a href="#pablo">
+                               <img class="img" src="../assets/admin/assets/img/card-2.jpg">
+                            </a>
                         </div>
-                        <div class="card-body">
-                            <p>${reference.description}</p>
-                            ${reference.medias.map(media => `
-                                <img src="${media.path}" width="100%" />
-                            `)}
-                        </div>
+                    <div class="card-body">
+                    <div class="card-actions text-center">
+                      <button type="button" class="btn btn-danger btn-link fix-broken-card">
+                        <i class="material-icons">build</i> Fix Header!
+                      </button>
+                      <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="View">
+                        <i class="material-icons">art_track</i>
+                      </button>
+                      <button type="button" class="btn btn-success btn-link" rel="tooltip" data-placement="bottom" title="Edit">
+                        <i class="material-icons">edit</i>
+                      </button>
+                      <button type="button" class="btn btn-danger btn-link" rel="tooltip" data-placement="bottom" title="Remove">
+                        <i class="material-icons">close</i>
+                      </button>
                     </div>
+                    <h4 class="card-title">
+                      <a href="#pablo">${reference.title}</a>
+                    </h4>
+                    <div class="card-description">
+                      ${reference.description}
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <div class="price">
+                      <h6>${reference.company} - ${moment(reference.startedAt).format("YYYY")} - ${reference.endedAt === null ? "Today" : moment(reference.endedAt).format("YYYY")}t</h6>
+                    </div>
+                    <div class="stats">
+                      <p class="card-category"><i class="material-icons">place</i> Barcelona, Spain</p>
+                    </div>
+                  </div>
+                </div>
                 </div>
             `);
         });

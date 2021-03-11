@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Controller\BackOffice;
+declare(strict_types=1);
+
+namespace App\Controller;
 
 use App\Entity\Reference;
 use App\Form\ReferenceType;
@@ -25,7 +27,9 @@ class ReferenceController extends AbstractController
      */
     public function manage(ReferenceRepository $referenceRepository): Response
     {
-        $references = $referenceRepository->findAll();
+        $references = $referenceRepository->findBy([
+            'user' => $this->getUser()
+        ]);
 
         return $this->render("portfolio/reference/manage.html.twig", [
             "references" => $references
@@ -43,6 +47,7 @@ class ReferenceController extends AbstractController
         $form = $this->createForm(ReferenceType::class, $reference)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $reference->setUser($this->getUser());
             $this->getDoctrine()->getManager()->persist($reference);
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash("success", "La référence a été ajoutée avec succès !");

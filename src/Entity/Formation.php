@@ -19,14 +19,14 @@ class Formation
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
-     * @Groups({"get"})
+     * @Groups({"get_formations"})
      */
     private ?int $id = null;
 
     /**
      * @var string|null
      * @ORM\Column
-     * @Groups({"get"})
+     * @Groups({"get_formations"})
      * @Assert\NotBlank(message="Ce champ ne peut pas être vide.")
      */
     private ?string $name = null;
@@ -34,7 +34,7 @@ class Formation
     /**
      * @var string|null
      * @ORM\Column
-     * @Groups({"get"})
+     * @Groups({"get_formations"})
      * @Assert\NotBlank(message="Ce champ ne peut pas être vide.")
      */
     private ?string $school = null;
@@ -42,7 +42,7 @@ class Formation
     /**
      * @var int|null
      * @ORM\Column(type="integer")
-     * @Groups({"get"})
+     * @Groups({"get_formations"})
      * @Assert\NotBlank(message="Ce champ ne peut pas être vide.")
      */
     private ?int $gradeLevel = null;
@@ -50,7 +50,7 @@ class Formation
     /**
      * @var string|null
      * @ORM\Column(type="text")
-     * @Groups({"get"})
+     * @Groups({"get_formations"})
      * @Assert\NotBlank(message="Ce champ ne peut pas être vide.")
      */
     private ?string $description = null;
@@ -58,7 +58,7 @@ class Formation
     /**
      * @var DateTimeInterface|null
      * @ORM\Column(type="date_immutable")
-     * @Groups({"get"})
+     * @Groups({"get_formations"})
      * @Assert\NotBlank(message="Ce champ ne peut pas être vide.")
      */
     private ?DateTimeInterface $startedAt = null;
@@ -66,7 +66,7 @@ class Formation
     /**
      * @var DateTimeInterface|null
      * @ORM\Column(type="date_immutable", nullable=true)
-     * @Groups({"get"})
+     * @Groups({"get_formations"})
      */
     private ?DateTimeInterface $endedAt = null;
 

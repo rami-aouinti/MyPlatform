@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Controller\BackOffice;
+declare(strict_types=1);
+
+namespace App\Controller;
 
 use App\Entity\Formation;
 use App\Form\FormationType;
@@ -25,7 +27,9 @@ class FormationController extends AbstractController
      */
     public function manage(FormationRepository $formationRepository): Response
     {
-        $formations = $formationRepository->findAll();
+        $formations = $formationRepository->findBy([
+            'user' => $this->getUser()
+        ]);
 
         return $this->render("portfolio/formation/manage.html.twig", [
             "formations" => $formations
@@ -43,6 +47,7 @@ class FormationController extends AbstractController
         $form = $this->createForm(FormationType::class, $formation)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $formation->setUser($this->getUser());
             $this->getDoctrine()->getManager()->persist($formation);
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash("success", "La formation a été ajoutée avec succès !");

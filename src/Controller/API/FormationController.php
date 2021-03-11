@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\API;
 
 use App\Repository\FormationRepository;
@@ -26,7 +28,7 @@ class FormationController extends AbstractController
         return new JsonResponse(
             $serializer->serialize($formationRepository->findBy([
                 'user' => $this->getUser()
-            ]), "json", ["groups" => "get"]),
+            ]), "json", ["groups" => "get_formations"]),
             JsonResponse::HTTP_OK,
             [],
             true

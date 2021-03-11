@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Class Language
@@ -17,6 +18,7 @@ class Language
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
+     * @Groups({"get_languages"})
      */
     private ?int $id = null;
 
@@ -24,6 +26,7 @@ class Language
      * @var string|null
      * @ORM\Column
      * @Assert\NotBlank(message="Ce champs ne peut pas être vide.")
+     * @Groups({"get_languages"})
      */
     private ?string $name = null;
 
@@ -37,6 +40,7 @@ class Language
      *     minMessage="Le niveau doit être supérieur ou égal à 1",
      *     maxMessage="Le niveau doit être inférieur ou égal à 10"
      * )
+     * @Groups({"get_languages"})
      */
     private ?int $level = null;
 

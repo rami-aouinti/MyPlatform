@@ -1,67 +1,67 @@
 <?php
-/*
- *
- * Date : 05/03/2021, 16:56
- * Author : rami
- * Class PortfolioController.php
- */
+
+declare(strict_types=1);
 
 namespace App\Controller;
 
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
-use Knp\Snappy\Pdf;
+use App\Repository\FormationRepository;
+use App\Repository\HobbyRepository;
+use App\Repository\LanguageRepository;
+use App\Repository\ReferenceRepository;
+use App\Repository\SkillRepository;
+use App\Service\PdfConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Dompdf\Dompdf;
-use Dompdf\Options;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * Class ResumeController
  * @package App\Controller
- * @Route("/resume", name="resume")
  */
 class ResumeController extends AbstractController
 {
+    private FormationRepository $formationRepository;
+    private SkillRepository $skillRepository;
+    private ReferenceRepository $referenceRepository;
+    private LanguageRepository $languageRepository;
+    private HobbyRepository $hobbyRepository;
+
     /**
-     * @return PdfResponse
+     * ResumeController constructor.
+     * @param FormationRepository $formationRepository
+     * @param SkillRepository $skillRepository
+     * @param ReferenceRepository $referenceRepository
+     * @param LanguageRepository $languageRepository
+     * @param HobbyRepository $hobbyRepository
      */
-    public function __invoke(): Response
+    public function __construct(
+        FormationRepository $formationRepository,
+        SkillRepository $skillRepository,
+        ReferenceRepository $referenceRepository,
+        LanguageRepository $languageRepository,
+        HobbyRepository $hobbyRepository
+    ) {
+        $this->formationRepository = $formationRepository;
+        $this->skillRepository = $skillRepository;
+        $this->referenceRepository = $referenceRepository;
+        $this->languageRepository = $languageRepository;
+        $this->hobbyRepository = $hobbyRepository;
+    }
+
+    #[Route('/generate', name: 'generate_resume')]
+    public function generate(PdfConverter $converter): Response
     {
-        // Configure Dompdf according to your needs
-        $pdfOptions = new Options();
-        $pdfOptions->set('defaultFont', 'Arial');
-
-        // Instantiate Dompdf with our options
-        $dompdf = new Dompdf($pdfOptions);
-
-        // Retrieve the HTML generated in our twig file
-        $html = $this->renderView('portfolio/index.html.twig', [
-            'title' => "Welcome to our PDF Test"
-        ]);
-
-        // Load HTML to Dompdf
-        $dompdf->loadHtml($html);
-
-        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
-        $dompdf->setPaper('A4', 'portrait');
-
-        // Render the HTML as PDF
-        $dompdf->render();
-
-        // Store PDF Binary Data
-        $output = $dompdf->output();
-
-        // In this case, we want to write the file in the public directory
-        $publicDirectory = $this->getParameter('kernel.project_dir') . '/public';
-        // e.g /var/www/project/public/mypdf.pdf
-        $pdfFilepath =  $publicDirectory . '/mypdf.pdf';
-
-        // Write file to the desired path
-        file_put_contents($pdfFilepath, $output);
-
-        // Send some text response
-        return new BinaryFileResponse('mypdf.pdf');
+        $user = $this->getUser();
+        $template = '/public/templates/pdf/resume/resume.pdf';
+        $converter->generateResume(
+            [
+                'formations' => $this->formationRepository->findBy(['user' => $user]),
+                'skills' => $this->skillRepository->findBy(['user' => $user]),
+                'references' => $this->referenceRepository->findBy(['user' => $user]),
+                'languages' => $this->languageRepository->findBy(['user' => $user]),
+                'hobbies' => $this->hobbyRepository->findBy(['user' => $user])
+            ],
+            $template
+        );
     }
 }

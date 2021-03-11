@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use App\Entity\Skill;
@@ -22,13 +24,13 @@ class SkillType extends AbstractType
     {
         $builder
             ->add("name", TextType::class, [
-                "label" => "Nom de la compétence :",
+                "label" => false,
                 "attr" => [
-                    "placeholder" => "Entrez le nom de la compétence..."
+                    "placeholder" => "Enter the name of the skill.."
                 ]
             ])
             ->add("level", RangeType::class, [
-                "label" => "Votre niveau :",
+                "label" => false,
                 "attr" => [
                     "min" => 1,
                     "max" => 10

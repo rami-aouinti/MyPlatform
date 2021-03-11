@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ProfileRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,6 +29,19 @@ class Profile
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private ?string $lastname = null;
+
+    /**
+     * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email
+     * @Assert\NotBlank
+     */
+    private ?string $email = null;
+
+    /**
+     * @ORM\Column(type="string", length=180, nullable=true)
+     * @Assert\NotBlank
+     */
+    private ?string $sex = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -153,6 +167,38 @@ class Profile
         $this->lastname = $lastname;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSex(): ?string
+    {
+        return $this->sex;
+    }
+
+    /**
+     * @param string|null $sex
+     */
+    public function setSex(?string $sex): void
+    {
+        $this->sex = $sex;
     }
 
     /**
@@ -397,11 +443,18 @@ class Profile
         $this->skype = $skype;
     }
 
+    /**
+     * @return string|null
+     */
     public function getBrochureFilename()
     {
         return $this->brochureFilename;
     }
 
+    /**
+     * @param $brochureFilename
+     * @return $this
+     */
     public function setBrochureFilename($brochureFilename)
     {
         $this->brochureFilename = $brochureFilename;

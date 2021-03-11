@@ -29,10 +29,9 @@ class PostRepository extends ServiceEntityRepository
     {
         return new Paginator(
             $this->createQueryBuilder("p")
-                ->addSelect("c")
-                ->join("p.comments", "c")
                 ->setMaxResults($limit)
                 ->setFirstResult(($page -1) * $limit)
+                ->orderBy('p.publishedAt', 'DESC')
         );
     }
 

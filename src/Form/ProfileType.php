@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use App\Entity\Profile;
@@ -7,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
@@ -27,6 +30,14 @@ class ProfileType extends AbstractType
                 'required' => false,
             ])
             ->add('lastname', TextType::class, [
+                'label' => false,
+                'required' => false,
+            ])
+            ->add('email', EmailType::class, [
+                'label' => false,
+                'required' => false,
+            ])
+            ->add('sex', TextType::class, [
                 'label' => false,
                 'required' => false,
             ])

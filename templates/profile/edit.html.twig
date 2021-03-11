@@ -1,196 +1,239 @@
 {% extends 'template/template.html.twig' %}
-
-{% block title %}Edit Post{% endblock %}
-
 {% block body %}
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card card-profile">
-                <div class="card-avatar">
-                    <a href="#pablo">
-                        {% if profile.brochureFilename %}
-                            <img class="img" src="{{ asset('uploads/images/' ~ profile.brochureFilename) }}" />
-                        {% endif %}
-                    </a>
-                </div>
-                <div class="card-body">
-                    <h6 class="card-category text-gray">{{ profile.title }}</h6>
-                    <h4 class="card-title">{{ profile.firstname }} {{ profile.lastname }}</h4>
-                    <p class="card-description">
-                        {{ profile.description }}
-                    </p>
-                    {{ include('profile/_delete_form.html.twig') }}
-                </div>
-            </div>
-        </div>
-        <div class="col-md-9">
-            {{ form_start(form) }}
-            <div class="card">
-                <div class="card-header card-header-icon card-header-warning">
-                    <div class="card-icon">
-                        <i class="material-icons">perm_identity</i>
+    <div class="col-md-10 mr-auto ml-auto">
+        <!--      Wizard container        -->
+        <div class="wizard-container">
+            <div class="card card-wizard" data-color="orange" id="wizardProfile">
+                    {{ form_start(form) }}
+                    <!--        You can switch " data-color="primary" "  with one of the next bright colors: "green", "orange", "red", "blue"       -->
+                    <div class="card-header text-center">
+                        <h3 class="card-title">
+                            Build Your Profile
+                        </h3>
+                        <h5 class="card-description">This information will let us know more about you.</h5>
                     </div>
-                    <h4 class="card-title">Edit Profile -
-                        <small class="category">Complete your profile</small>
-                    </h4>
-                </div>
-                <div class="card-body">
-                    <form>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-                                    <div class="fileinput-new thumbnail img-circle">
-                                        <img src="{{ asset('assets/admin/assets/img/placeholder.jpg') }}" alt="...">
+                    <div class="wizard-navigation">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#about" data-toggle="tab" role="tab">
+                                    About
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#account" data-toggle="tab" role="tab">
+                                    Account
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#address" data-toggle="tab" role="tab">
+                                    Address
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="about">
+                                <h5 class="info-text"> Let's start with the basic information (with validation)</h5>
+                                <div class="row justify-content-center">
+                                    <div class="col-sm-4">
+                                        <div class="picture-container">
+                                            <div class="picture">
+                                                {% if profile.brochureFilename %}
+                                                    <img src="{{ asset('uploads/images/' ~ profile.brochureFilename) }}" class="picture-src" id="wizardPicturePreview" title="" />
+                                                {% else %}
+                                                    <img src="{{ asset('assets/admin/assets/img/default-avatar.png') }}" class="picture-src" id="wizardPicturePreview" title="" />
+                                                {% endif %}
+                                                {{ form_widget(form.brochure) }}
+                                                <input type="file" id="wizard-picture" name="profile[brochure]">
+                                            </div>
+                                            <h6 class="description">Choose Picture</h6>
+                                        </div>
                                     </div>
-                                    <div class="fileinput-preview fileinput-exists thumbnail img-circle"></div>
-                                    <div>
-                                        <span class="btn btn-round btn-warning btn-file">
-                                            <span class="fileinput-new"></span>
-                                            <span class="fileinput-exists">Change</span>
-                                            {{ form_row(form.brochure) }}
-                                        </span>
-                                        <br />
-                                        <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                                    <div class="col-sm-6">
+                                        <div class="input-group form-control-lg">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="material-icons">face</i>
+                                                </span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInput1" class="bmd-label-floating">Title</label>
+                                                {{ form_widget(form.title) }}
+                                            </div>
+                                        </div>
+                                        <div class="input-group form-control-lg">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="material-icons">face</i>
+                                                </span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInput1" class="bmd-label-floating">Firstname</label>
+                                                {{ form_widget(form.firstname) }}
+                                            </div>
+                                        </div>
+                                        <div class="input-group form-control-lg">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="material-icons">record_voice_over</i>
+                                                </span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInput11" class="bmd-label-floating">Lastname</label>
+                                                {{ form_widget(form.lastname) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-10 mt-3">
+                                        <div class="input-group form-control-lg">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="material-icons">email</i>
+                                                </span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInput1" class="bmd-label-floating">Email (required)</label>
+                                                {{ form_widget(form.email) }}
+                                            </div>
+                                        </div>
+                                        <div class="input-group form-control-lg">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="material-icons">phone</i>
+                                                </span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInput1" class="bmd-label-floating">Phone</label>
+                                                {{ form_widget(form.phone) }}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="card ">
-                                    <div class="card-header card-header-warning card-header-text">
-                                        <div class="card-icon">
-                                            <i class="material-icons">library_books</i>
+                            <div class="tab-pane" id="account">
+                                <h5 class="info-text"> What are you doing? (checkboxes) </h5>
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-10">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="choice" data-toggle="wizard-checkbox">
+                                                    <input type="checkbox" name="jobb" value="Design">
+                                                    <div class="icon">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </div>
+                                                    <h6>Design</h6>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="choice" data-toggle="wizard-checkbox">
+                                                    <input type="checkbox" name="jobb" value="Code">
+                                                    <div class="icon">
+                                                        <i class="fa fa-terminal"></i>
+                                                    </div>
+                                                    <h6>Code</h6>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="choice" data-toggle="wizard-checkbox">
+                                                    <input type="checkbox" name="jobb" value="Develop">
+                                                    <div class="icon">
+                                                        <i class="fa fa-laptop"></i>
+                                                    </div>
+                                                    <h6>Develop</h6>
+                                                </div>
+                                                <select class="selectpicker" data-style="btn btn-warning btn-round" title="Single Select" data-size="7">
+                                                    <option disabled selected>Choose city</option>
+                                                    <option value="2">Foobar</option>
+                                                    <option value="3">Is great</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                        <h4 class="card-title">Birthday</h4>
                                     </div>
-                                    <div class="card-body ">
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="address">
+                                <div class="row justify-content-center">
+                                    <div class="col-sm-12">
+                                        <h5 class="info-text"> Are you living in a nice area? </h5>
+                                    </div>
+                                    <div class="col-sm-7">
                                         <div class="form-group">
-                                            {{ form_row(form.birthdayDate) }}
+                                            <label>Street Name</label>
+                                            {{ form_widget(form.street) }}
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="bmd-label-floating">Title</label>
-                                    {{ form_row(form.title) }}
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="bmd-label-floating">Firstname</label>
-                                    {{ form_row(form.firstname) }}
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="bmd-label-floating">Lastname</label>
-                                    {{ form_row(form.lastname) }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="bmd-label-floating">Nationality</label>
-                                    {{ form_row(form.nationality) }}
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="bmd-label-floating">Phone</label>
-                                    {{ form_row(form.phone) }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-10">
-                                <div class="form-group">
-                                    <label class="bmd-label-floating">Adress</label>
-                                    {{ form_row(form.street) }}
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label class="bmd-label-floating">Hn</label>
-                                    {{ form_row(form.houseNumber) }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="bmd-label-floating">State</label>
-                                    {{ form_row(form.state) }}
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="bmd-label-floating">Country</label>
-                                    {{ form_row(form.country) }}
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="bmd-label-floating">Postal Code</label>
-                                    {{ form_row(form.postcode) }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>linkedIn</label>
-                                    <div class="form-group">
-                                        {{ form_row(form.linkdIn) }}
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label>Street No.</label>
+                                            {{ form_widget(form.houseNumber) }}
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Facebook</label>
-                                    <div class="form-group">
-                                        {{ form_row(form.facebook) }}
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label>Postcode</label>
+                                            {{ form_widget(form.postcode) }}
+                                        </div>
                                     </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label>City</label>
+                                            {{ form_widget(form.state) }}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        {{ form_widget(form.country) }}
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <label> Birthday </label>
+                                        {{ form_widget(form.birthdayDate) }}
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <label> Sex </label>
+                                        {{ form_widget(form.sex) }}
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <label> Description </label>
+                                        {{ form_widget(form.description) }}
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <label> Nationality </label>
+                                        {{ form_widget(form.nationality) }}
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <label> LinkdIn </label>
+                                        {{ form_widget(form.linkdIn) }}
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <label> Facebook </label>
+                                        {{ form_widget(form.facebook) }}
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <label> Twitter </label>
+                                        {{ form_widget(form.tweeter) }}
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <label> Skype </label>
+                                        {{ form_widget(form.skype) }}
+                                    </div>
+
+                                    {{ form_rest(form) }}
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Tweeter</label>
-                                    <div class="form-group">
-                                        {{ form_row(form.tweeter) }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Skype</label>
-                                    <div class="form-group">
-                                        {{ form_row(form.skype) }}
-                                    </div>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="mr-auto">
+                            <input type="button" class="btn btn-previous btn-fill btn-default btn-wd disabled" name="previous" value="Previous">
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>About Me</label>
-                                    <div class="form-group">
-                                        {{ form_row(form.description) }}
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="ml-auto">
+                            <input type="button" class="btn btn-next btn-fill btn-warning btn-wd" name="next" value="Next">
+                            <button class="btn btn-finish btn-fill btn-warning btn-wd" name="finish">{{ button_label|default('Finish') }}</button>
                         </div>
-                        {{ form_rest(form) }}
-                        <button class="btn btn-warning pull-right">{{ button_label|default('Save') }}</button>
                         <div class="clearfix"></div>
-                    </form>
-                </div>
+                    </div>
+                    {{ form_end(form) }}
             </div>
-            {{ form_end(form) }}
         </div>
     </div>
 {% endblock %}

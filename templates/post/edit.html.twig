@@ -1,4 +1,4 @@
-{% extends 'template/.html.twig' %}
+{% extends 'template/template.html.twig' %}
 
 {% block title %}Edit Post{% endblock %}
 
@@ -8,6 +8,4 @@
     {{ include('post/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('home') }}">back to list</a>
-
-    {{ include('post/_delete_form.html.twig') }}
 {% endblock %}

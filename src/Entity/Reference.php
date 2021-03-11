@@ -6,6 +6,7 @@ use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -21,7 +22,7 @@ class Reference
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
-     * @Groups({"get"})
+     * @Groups({"get_references"})
      */
     private ?int $id = null;
 
@@ -29,7 +30,7 @@ class Reference
      * @var string|null
      * @ORM\Column
      * @Assert\NotBlank(message="Ce champs ne peut pas être vide.")
-     * @Groups({"get"})
+     * @Groups({"get_references"})
      */
     private ?string $title = null;
 
@@ -37,7 +38,7 @@ class Reference
      * @var string|null
      * @ORM\Column
      * @Assert\NotBlank(message="Ce champs ne peut pas être vide.")
-     * @Groups({"get"})
+     * @Groups({"get_references"})
      */
     private ?string $company = null;
 
@@ -45,7 +46,7 @@ class Reference
      * @var string|null
      * @ORM\Column(type="text")
      * @Assert\NotBlank(message="Ce champs ne peut pas être vide.")
-     * @Groups({"get"})
+     * @Groups({"get_references"})
      */
     private ?string $description = null;
 
@@ -53,14 +54,14 @@ class Reference
      * @var DateTimeInterface|null
      * @ORM\Column(type="date_immutable")
      * @Assert\NotBlank(message="Ce champs ne peut pas être vide.")
-     * @Groups({"get"})
+     * @Groups({"get_references"})
      */
     private ?DateTimeInterface $startedAt = null;
 
     /**
      * @var DateTimeInterface|null
      * @ORM\Column(type="date_immutable", nullable=true)
-     * @Groups({"get"})
+     * @Groups({"get_references"})
      */
     private ?DateTimeInterface $endedAt = null;
 
@@ -68,7 +69,7 @@ class Reference
      * @var Collection
      * @ORM\OneToMany(targetEntity="Media", mappedBy="reference", cascade={"persist"}, orphanRemoval=true)
      * @Assert\Count(min=1, minMessage="Vous devez ajouter au moins une image.")
-     * @Groups({"get"})
+     * @Groups({"get_references"})
      */
     private Collection $medias;
 
@@ -80,7 +81,7 @@ class Reference
     /**
      * Reference constructor.
      */
-    public function __construct()
+    #[Pure] public function __construct()
     {
         $this->medias = new ArrayCollection();
     }

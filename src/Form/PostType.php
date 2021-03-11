@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use App\Entity\Post;
@@ -15,9 +17,12 @@ class PostType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add("title", TextType::class)
-            ->add("description", TextareaType::class)
-            ->add("url", UrlType::class);
+            ->add("title", TextType::class, [
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Add Post'
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

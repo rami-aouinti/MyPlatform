@@ -105,7 +105,17 @@ class User implements UserInterface
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Profile", mappedBy="user")
      */
-    private Profile $profile;
+    public ?Profile $profile = null;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Friend::class, mappedBy="sender")
+     */
+    private Collection $senders;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Friend::class, mappedBy="receiver")
+     */
+    private Collection $receivers;
 
     /**
      * User constructor.
@@ -120,6 +130,16 @@ class User implements UserInterface
         $this->references = new ArrayCollection();
         $this->languages = new ArrayCollection();
         $this->hobbies = new ArrayCollection();
+        $this->senders = new ArrayCollection();
+        $this->receivers = new ArrayCollection();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->getUsername();
     }
 
     /**
@@ -390,5 +410,21 @@ class User implements UserInterface
     public function getProfile(): Profile
     {
         return $this->profile;
+    }
+
+    /**
+     * @return Collection|Friend[]
+     */
+    public function getSenders(): Collection
+    {
+        return $this->senders;
+    }
+
+    /**
+     * @return Collection|Friend[]
+     */
+    public function getReceivers(): Collection
+    {
+        return $this->receivers;
     }
 }

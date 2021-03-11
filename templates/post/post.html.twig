@@ -13,34 +13,46 @@
                 </div>
                 <div class="card-footer">
                     <h4 class="card-title">{{ post.author.nickname }}</h4>
-                    <h6 class="card-category">@alecthompson</h6>
+                    <h6 class="card-category">{{ post.author.profile.title }}</h6>
                     <div class="card-avatar">
                         <a href="#pablo">
-                            <img class="img" src="{{ asset('assets/admin/assets/img/faces/card-profile1-square.jpg') }}" />
+                            <img class="img" src="{{ asset('uploads/images/' ~ post.author.profile.brochureFilename) }}" />
                         </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <hr>
     {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="row">
+        <div class="col-md-8">
+            {{ form_widget(form) }}
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-warning btn-round">{{ button_label|default('Comment') }}</button>
+        </div>
+    </div>
     {{ form_end(form) }}
 
     <div class="row">
+        {% for comment in post.comments|reverse %}
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-description">
-                        {% for comment in post.comments %}
-                            <li>
-                               {{ comment.author.nickname}} :  {{ comment.comment }}
-                            </li>
-                        {% endfor %}
+                        <div class="row">
+                            <div class="col-md-2">
+                                <h5><a href="#">{{ comment.author.nickname}}</a></h5>
+                            </div>
+                            <div class="col-md-10">
+                                <h6>{{ comment.comment }}</h6>
+                            </div>
+                        </div>
                     </h5>
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
 {% endblock %}

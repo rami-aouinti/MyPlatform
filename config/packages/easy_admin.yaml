@@ -1,0 +1,14 @@
+# config/packages/easy_admin.yaml
+easy_admin:
+  design:
+    assets:
+      # all kinds of assets are supported and linked accordingly
+      css:
+        - 'https://example.org/css/admin3.css'
+      js:
+        - 'https://example.org/js/admin3.js'
+  entities:
+    # change the following to the namespaces of your own entities
+    - App\Entity\Formation
+    - App\Entity\Skill
+    - App\Entity\User

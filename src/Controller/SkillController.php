@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Controller\BackOffice;
+declare(strict_types=1);
+
+namespace App\Controller;
 
 use App\Entity\Skill;
 use App\Form\SkillType;
@@ -25,7 +27,9 @@ class SkillController extends AbstractController
      */
     public function manage(SkillRepository $skillRepository): Response
     {
-        $skills = $skillRepository->findAll();
+        $skills = $skillRepository->findBy([
+            'user' => $this->getUser()
+        ]);
 
         return $this->render("portfolio/skill/manage.html.twig", [
             "skills" => $skills
@@ -43,6 +47,7 @@ class SkillController extends AbstractController
         $form = $this->createForm(SkillType::class, $skill)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $skill->setUser($this->getUser());
             $this->getDoctrine()->getManager()->persist($skill);
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash("success", "La compétence a été ajoutée avec succès !");

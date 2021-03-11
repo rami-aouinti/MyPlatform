@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\PostRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -27,14 +28,14 @@ class Post
     private string $title;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
-    private string $description;
+    private ?string $description = null;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private string $url;
+    private ?string $url = null;
 
     /**
      * @ORM\Column(type="datetime")
@@ -44,7 +45,7 @@ class Post
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="posts")
      */
-    private User $author;
+    private ?User $author = null;
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="post")

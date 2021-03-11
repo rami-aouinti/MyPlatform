@@ -14,9 +14,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\FileUploader;
+use Symfony\Component\Security\Core\Security;
 
 class ProfileController extends AbstractController
 {
+
+    private Security $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     #[Route('/profile', name: 'profile')]
     public function index(UserRepository $userRepository): Response
     {
@@ -49,7 +58,6 @@ class ProfileController extends AbstractController
         }
         $form = $this->createForm(ProfileType::class, $profile);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $brochureFile */
             $brochureFile = $form->get('brochure')->getData();
@@ -58,16 +66,26 @@ class ProfileController extends AbstractController
                 $profile->setBrochureFilename($brochureFileName);
             }
             $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('profile_edit', [
-                'id' => $this->getUser()->getId()
-            ]);
+            return $this->redirectToRoute('home');
         }
 
         return $this->render('profile/edit.html.twig', [
             'user' => $user,
             'profile' => $profile,
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('profile/show', name: 'post_show', methods: ['GET'])]
+    public function show(): Response
+    {
+        if (!$this->security->getUser()) {
+            $this->redirectToRoute('app_login');
+        }
+        /** @var User $user */
+        $user = $this->security->getUser();
+        return $this->render('profile/show.html.twig', [
+            'user' => $user
         ]);
     }
 

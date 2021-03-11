@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Class Hobby
@@ -17,6 +18,7 @@ class Hobby
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
+     * @Groups({"get_hobbies"})
      */
     private ?int $id = null;
 
@@ -24,6 +26,7 @@ class Hobby
      * @var string|null
      * @ORM\Column
      * @Assert\NotBlank(message="Ce champs ne peut pas être vide.")
+     * @Groups({"get_hobbies"})
      */
     private ?string $name = null;
 

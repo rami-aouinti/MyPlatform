@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\API;
 
 use App\Repository\ReferenceRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -12,7 +15,7 @@ use Symfony\Component\Serializer\SerializerInterface;
  * @package App\Controller\API
  * @Route("/api/references")
  */
-class ReferenceController
+class ReferenceController extends AbstractController
 {
     /**
      * @Route("", methods={"GET"}, name="api_references_collection_get")
@@ -23,7 +26,9 @@ class ReferenceController
     public function collection(ReferenceRepository $referenceRepository, SerializerInterface $serializer): JsonResponse
     {
         return new JsonResponse(
-            $serializer->serialize($referenceRepository->findAll(), 'json', ['groups' => 'get']),
+            $serializer->serialize($referenceRepository->findBy([
+                'user' => $this->getUser()
+            ]), 'json', ['groups' => 'get_references']),
             200,
             [],
             true
