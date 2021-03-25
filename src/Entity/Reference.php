@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
+use App\Trait\IdentifierTrait;
+use App\Trait\TimestampsTrait;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -14,17 +18,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class Reference
  * @package App\Entity
  * @ORM\Entity(repositoryClass="App\Repository\ReferenceRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Reference
 {
-    /**
-     * @var int|null
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer")
-     * @Groups({"get_references"})
-     */
-    private ?int $id = null;
+    use IdentifierTrait;
+
+    use TimestampsTrait;
 
     /**
      * @var string|null
@@ -84,14 +84,6 @@ class Reference
     #[Pure] public function __construct()
     {
         $this->medias = new ArrayCollection();
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**

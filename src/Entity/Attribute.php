@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
+use App\Trait\IdentifierTrait;
+use App\Trait\TimestampsTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -10,17 +14,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * Class Attribute
  * @package App\Entity
  * @ORM\Entity(repositoryClass="App\Repository\AttributeRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Attribute
 {
-    /**
-     * @var int|null
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer")
-     * @Groups({"get_attributes"})
-     */
-    private ?int $id = null;
+    use IdentifierTrait;
+
+    use TimestampsTrait;
 
     /**
      * @var string|null
@@ -50,14 +50,6 @@ class Attribute
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="attributes")
      */
     private User $user;
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * @return string|null

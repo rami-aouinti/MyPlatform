@@ -95,6 +95,26 @@ if ($("#hobbies").length > 0) {
     })
 }
 
+if ($("#projects").length > 0) {
+    $.getJSON("/api/projects", projects => {
+        projects.forEach(project => {
+            $("#projects").append(`
+                <li class="list-group-item">${project.name}</li>
+            `);
+        });
+    })
+}
+
+if ($("#attributes").length > 0) {
+    $.getJSON("/api/hobbies", attributes => {
+        attributes.forEach(attribute => {
+            $("#attributes").append(`
+                <li class="list-group-item">${attribute.name}</li>
+            `);
+        });
+    })
+}
+
 if ($("#references").length > 0) {
     $.getJSON("/api/references", references => {
         references.forEach(reference => {

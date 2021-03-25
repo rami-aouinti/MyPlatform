@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
+use App\Trait\IdentifierTrait;
+use App\Trait\TimestampsTrait;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -11,17 +15,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * Class Formation
  * @package App\Entity
  * @ORM\Entity(repositoryClass="App\Repository\FormationRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Formation
 {
-    /**
-     * @var int|null
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer")
-     * @Groups({"get_formations"})
-     */
-    private ?int $id = null;
+    use IdentifierTrait;
+
+    use TimestampsTrait;
 
     /**
      * @var string|null
@@ -74,14 +74,6 @@ class Formation
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="formations")
      */
     private User $user;
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * @return string|null

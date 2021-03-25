@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
+use App\Trait\IdentifierTrait;
+use App\Trait\TimestampsTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -10,17 +14,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * Class Skill
  * @package App\Entity
  * @ORM\Entity(repositoryClass="App\Repository\SkillRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Skill
 {
-    /**
-     * @var int|null
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer")
-     * @Groups({"get_skills"})
-     */
-    private ?int $id = null;
+    use IdentifierTrait;
+
+    use TimestampsTrait;
 
     /**
      * @var string|null
@@ -48,14 +48,6 @@ class Skill
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="skills")
      */
     private User $user;
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * @return string|null

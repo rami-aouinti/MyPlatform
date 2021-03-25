@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\ProfileRepository;
+use App\Trait\IdentifierTrait;
+use App\Trait\TimestampsTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -10,15 +14,13 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ProfileRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Profile
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    protected ?int $id = null;
+    use IdentifierTrait;
+
+    use TimestampsTrait;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -122,14 +124,6 @@ class Profile
      * @ORM\OneToOne(targetEntity=User::class, inversedBy="profile")
      */
     private User $user;
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * @return string|null

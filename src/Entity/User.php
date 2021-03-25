@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use App\Trait\IdentifierTrait;
+use App\Trait\TimestampsTrait;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -18,15 +20,13 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\EntityListeners({"App\EntityListener\UserListener"})
  * @UniqueEntity("email")
  * @UniqueEntity("nickname")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    protected ?int $id = null;
+    use IdentifierTrait;
+
+    use TimestampsTrait;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
@@ -103,6 +103,16 @@ class User implements UserInterface
     private Collection $hobbies;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="user")
+     */
+    private Collection $projects;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Attribute", mappedBy="user")
+     */
+    private Collection $attributes;
+
+    /**
      * @ORM\OneToOne(targetEntity="App\Entity\Profile", mappedBy="user")
      */
     public ?Profile $profile = null;
@@ -130,6 +140,8 @@ class User implements UserInterface
         $this->references = new ArrayCollection();
         $this->languages = new ArrayCollection();
         $this->hobbies = new ArrayCollection();
+        $this->projects = new ArrayCollection();
+        $this->attributes = new ArrayCollection();
         $this->senders = new ArrayCollection();
         $this->receivers = new ArrayCollection();
     }
@@ -140,14 +152,6 @@ class User implements UserInterface
     public function __toString(): string
     {
         return $this->getUsername();
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**
@@ -364,6 +368,22 @@ class User implements UserInterface
     public function getHobbies(): Collection
     {
         return $this->hobbies;
+    }
+
+    /**
+     * @return Collection|Project[]
+     */
+    public function getProjects(): Collection
+    {
+        return $this->projects;
+    }
+
+    /**
+     * @return Collection|Attribute[]
+     */
+    public function getAttributes(): Collection
+    {
+        return $this->attributes;
     }
 
     /**

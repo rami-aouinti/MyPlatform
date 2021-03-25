@@ -5,22 +5,21 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\PostRepository;
-use DateTimeInterface;
+use App\Trait\IdentifierTrait;
+use App\Trait\TimestampsTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Post
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private int $id;
+    use IdentifierTrait;
+
+    use TimestampsTrait;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -59,14 +58,6 @@ class Post
     {
         $this->publishedAt = new \DateTime();
         $this->comments = new ArrayCollection();
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**

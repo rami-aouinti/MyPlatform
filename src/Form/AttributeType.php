@@ -6,7 +6,9 @@ namespace App\Form;
 
 use App\Entity\Attribute;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -28,13 +30,13 @@ class AttributeType extends AbstractType
                     "placeholder" => "Enter the name of the Project.."
                 ]
             ])
-            ->add("description", TextType::class, [
+            ->add("description", TextareaType::class, [
                 "label" => false,
                 "attr" => [
                     "placeholder" => "Enter the description of the project.."
                 ]
             ])
-            ->add("url", TextType::class, [
+            ->add("url", UrlType::class, [
                 "label" => false,
                 "attr" => [
                     "placeholder" => "Enter the url of the project.."
